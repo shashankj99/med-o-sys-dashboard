@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Med-O-Sys Admin Dashboard</title>
+
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/fontawesome.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/ionicons.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/adminlte.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/overlayscrollbars.min.css">
+    <link rel="stylesheet" href="https://lbtechnology.co/med-o-sys-dashboard-static-files/plugins/daterangepicker.css">
+
+  </head>
+
+  <body class="hold-transition">
+
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/jquery.min.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/jquery-ui.min.js"></script>
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/bootstrap.bundle.min.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/moment.min.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/daterangepicker.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/bootstrap.min.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/overlayscrollbars.min.js"></script>
+  <script src="https://lbtechnology.co/med-o-sys-dashboard-static-files/scripts/adminlte.js"></script>
+
+  <div id="main-div" class="wrapper">
+    <div id="root"></div>
+  </div>
+
+  <script>
+    $(window).on('load', function () {
+      const pathname = window.location.pathname;
+      if (pathname === "/login" || pathname === "/register" || pathname === "/mobile/verify")
+        $('body')
+                .removeClass()
+                .addClass("hold-transition lockscreen")
+      else
+        $('body').removeClass().addClass("hold-transition sidebar-mini layout-fixed");
+
+      if (pathname === "/login" || pathname === "/mobile/verify" || pathname === "/register")
+        $('#main-div').removeClass();
+    }).trigger("load");
+  </script>
+
+  </body>
+</html>
