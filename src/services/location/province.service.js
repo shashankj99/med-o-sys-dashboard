@@ -6,5 +6,5 @@ export const get_all_provinces = () => {
 
     return axios.get(provinceUrl)
         .then(res => { return res })
-        .catch(err => { return err });
+        .catch(err => { return err.response });
 }

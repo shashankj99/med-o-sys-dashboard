@@ -1,4 +1,4 @@
-import {Register, verify_otp} from "../../../services/auth.service";
+import {Register, verify_email_token, verify_otp} from "../../../services/auth.service";
 
 /**
  * Register User Action
@@ -22,6 +22,11 @@ export const RegisterAction = (credentials) => {
     }
 }
 
+/**
+ * Verify OTP Action
+ * @param credentials
+ * @returns {function(...[*]=)}
+ */
 export const verify_otp_action = (credentials) => {
     return (dispatch) => {
         dispatch({ type: 'RESTART_AUTH_RESPONSE' });
@@ -33,7 +38,27 @@ export const verify_otp_action = (credentials) => {
                 else
                     dispatch({ type: 'OTP_VERIFICATION_FAILED', res });
             })
-            .catch(err => { console.log('err', err); dispatch({ type: 'CODE_ERROR', err }) });
+            .catch(err =>dispatch({ type: 'CODE_ERROR', err }));
+    }
+}
+
+/**
+ * Email verification Action
+ * @param token
+ * @returns {function(...[*]=)}
+ */
+export const verify_email_token_action = (token) => {
+    return (dispatch) => {
+        dispatch({ type: 'RESTART_AUTH_RESPONSE' });
+
+        verify_email_token({token})
+            .then(res => {
+                if (res.status === 200)
+                    dispatch({ type: 'EMAIL_VERIFICATION_SUCCESSFUL', res });
+                else
+                    dispatch({ type: 'EMAIL_VERIFICATION_FAILED', res });
+            })
+            .catch(err => dispatch({ type: 'CODE_ERROR', err }));
     }
 }
 

@@ -6,5 +6,5 @@ export const get_all_districts = (provinceId) => {
 
     return axios.get(districtUrl)
         .then(res => { return res })
-        .catch(err => { return err });
+        .catch(err => { return err.response });
 }

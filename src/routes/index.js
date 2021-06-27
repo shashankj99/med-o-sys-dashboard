@@ -6,6 +6,7 @@ import Login from "../views/auth/login.view";
 import Register from "../views/auth/register.view";
 import {RouteGuard, RouteGuardForLogin} from "./guard";
 import MobileVerification from "../views/auth/mobile_verification.view";
+import EmailVerification from "../views/auth/email_verification.view";
 
 export default function Routes() {
     return (
@@ -17,6 +18,7 @@ export default function Routes() {
             <RouteGuardForLogin path="/login" token="access_token" routeRedirect="/home" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/mobile/verify" component={MobileVerification} />
+            <Route path="/activate/:token" component={EmailVerification} />
         </Switch>
     );
 }

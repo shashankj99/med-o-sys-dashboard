@@ -6,5 +6,5 @@ export const get_all_cities = (districtId) => {
 
     return axios.get(cityUrl)
         .then(res => { return res })
-        .catch(err => { return err });
+        .catch(err => { return err.response });
 }

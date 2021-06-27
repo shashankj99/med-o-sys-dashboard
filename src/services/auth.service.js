@@ -12,7 +12,7 @@ export const Register = (credentials) => {
 
     return axios.post(registerUrl, credentials)
         .then(res => { return res })
-        .catch(err => { return err });
+        .catch(err => { return err.response });
 }
 
 /**
@@ -24,6 +24,19 @@ export const verify_otp = (credentials) => {
     const mobileVerificationUrl = `${config.oauthUrl}/mobile/verify`;
 
     return axios.post(mobileVerificationUrl, credentials)
+        .then(res => { return res })
+        .catch(err => { return err.response });
+}
+
+/**
+ * Email verification API
+ * @param credentials
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const verify_email_token = (credentials) => {
+    const emailVerificationUrl = `${config.oauthUrl}/email/verify`;
+
+    return axios.post(emailVerificationUrl, credentials)
         .then(res => { return res })
         .catch(err => { return err.response });
 }
