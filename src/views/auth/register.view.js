@@ -77,11 +77,11 @@ export default function Register(props) {
     let userAuthResponse = useSelector(state => state.auth.userAuthResponse),
         provinceResponse = useSelector(state => state.province.provinceResponse),
         districtResponse = useSelector(state => state.district.districtResponse),
-        cityResponse     = useSelector(state => state.city.cityResponse);
+        cityResponse = useSelector(state => state.city.cityResponse);
 
     // dynamically generate the list of provinces
     const get_provinces = () => {
-        if(Array.isArray(provinceResponse))
+        if (Array.isArray(provinceResponse))
             return provinceResponse.map(province =>
                 <option key={province.id} value={province.slug}>{province.name} ( {province.nep_name} )</option>
             );
@@ -104,7 +104,7 @@ export default function Register(props) {
 
     // dynamically append district once province is selected
     const get_districts = () => {
-        if(Array.isArray(districtResponse))
+        if (Array.isArray(districtResponse))
             return districtResponse.map(district =>
                 <option key={district.id} value={district.slug}>{district.name} ( {district.nep_name} )</option>
             );
@@ -126,7 +126,7 @@ export default function Register(props) {
 
     // dynamically append city once district is selected
     const get_cities = () => {
-        if(Array.isArray(cityResponse))
+        if (Array.isArray(cityResponse))
             return cityResponse.map(city =>
                 <option key={city.id} value={city.slug}>{city.name} ( {city.nep_name} )</option>
             );
@@ -172,8 +172,7 @@ export default function Register(props) {
         if (fields.password !== fields.password_confirmation) {
             alert('Your password didn\'t match.');
             isDisabled = false;
-        }
-        else {
+        } else {
             fields.dob_ad = change_date_format(fields.dob_ad);
             fields.age = calculate_age(fields.dob_ad);
 
@@ -181,20 +180,18 @@ export default function Register(props) {
         }
     }
 
-    // get validation errors
+    // errors
     if (userAuthResponse.status === 422) {
         for (const [key, value] of Object.entries(userAuthResponse.errors)) {
             validationErrors[key] = value;
         }
         isDisabled = false;
-    }
-
-    // get success message and go to mobile verification page
-    if (userAuthResponse.status === 200) {
+    } else {
         isDisabled = false;
         alert(userAuthResponse.message);
         dispatch(ClearAuthState());
-        props.history.push('/mobile/verify');
+        if (userAuthResponse.status === 200)
+            props.history.push('/mobile/verify');
     }
 
     return (
@@ -227,7 +224,8 @@ export default function Register(props) {
                                     />
                                     {
                                         validationErrors.first_name
-                                            ? <span className="error invalid-feedback">{validationErrors.first_name[0]}</span>
+                                            ? <span
+                                                className="error invalid-feedback">{validationErrors.first_name[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -259,7 +257,8 @@ export default function Register(props) {
                                     />
                                     {
                                         validationErrors.last_name
-                                            ? <span className="error invalid-feedback">{validationErrors.last_name[0]}</span>
+                                            ? <span
+                                                className="error invalid-feedback">{validationErrors.last_name[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -281,10 +280,10 @@ export default function Register(props) {
                             <div className="col-md-3 col-12 mb-2">
                                 <div className="form-group">
                                     <select className={
-                                                validationErrors.province
-                                                    ? `custom-select border-width-2 is-invalid`
-                                                    : `custom-select border-width-2`
-                                            }
+                                        validationErrors.province
+                                            ? `custom-select border-width-2 is-invalid`
+                                            : `custom-select border-width-2`
+                                    }
                                             id="province"
                                             required={true}
                                             value={fields.province}
@@ -295,7 +294,8 @@ export default function Register(props) {
                                     </select>
                                     {
                                         validationErrors.province
-                                            ? <span className="error invalid-feedback">{validationErrors.province[0]}</span>
+                                            ? <span
+                                                className="error invalid-feedback">{validationErrors.province[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -303,10 +303,10 @@ export default function Register(props) {
                             <div className="col-md-3 col-12 mb-2">
                                 <div className="form-group">
                                     <select className={
-                                                validationErrors.district
-                                                    ? `custom-select border-width-2 is-invalid`
-                                                    : `custom-select border-width-2`
-                                            }
+                                        validationErrors.district
+                                            ? `custom-select border-width-2 is-invalid`
+                                            : `custom-select border-width-2`
+                                    }
                                             id="district"
                                             required={true}
                                             value={fields.district}
@@ -325,10 +325,10 @@ export default function Register(props) {
                             <div className="col-md-3 col-12 mb-2">
                                 <div className="form-group">
                                     <select className={
-                                                validationErrors.city
-                                                    ? `custom-select border-width-2 is-invalid`
-                                                    : `custom-select border-width-2`
-                                            }
+                                        validationErrors.city
+                                            ? `custom-select border-width-2 is-invalid`
+                                            : `custom-select border-width-2`
+                                    }
                                             id="city"
                                             required={true}
                                             value={fields.city}
@@ -347,10 +347,10 @@ export default function Register(props) {
                             <div className="col-md-3 col-12 mb-2">
                                 <div className="form-group">
                                     <select className={
-                                                validationErrors.ward_no
-                                                    ? `custom-select border-width-2 is-invalid`
-                                                    : `custom-select border-width-2`
-                                            }
+                                        validationErrors.ward_no
+                                            ? `custom-select border-width-2 is-invalid`
+                                            : `custom-select border-width-2`
+                                    }
                                             id="ward_no"
                                             required={true}
                                             value={fields.ward_no}
@@ -361,7 +361,8 @@ export default function Register(props) {
                                     </select>
                                     {
                                         validationErrors.ward_no
-                                            ? <span className="error invalid-feedback">{validationErrors.ward_no[0]}</span>
+                                            ? <span
+                                                className="error invalid-feedback">{validationErrors.ward_no[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -379,17 +380,17 @@ export default function Register(props) {
                             <div className="col-md-3 col-12 mb-2">
                                 <div className="form-group">
                                     <Calendar type="text"
-                                          className={
-                                              validationErrors.dob_bs
-                                                  ? `form-control is-invalid`
-                                                  : `form-control`
-                                          }
-                                           id="dob_bs"
-                                           theme="deepdark"
-                                           required={true}
-                                           value={fields.dob_bs}
-                                           onChange={handleFieldChange}
-                                           dateFormat="YYYY/MM/DD" language="en"
+                                              className={
+                                                  validationErrors.dob_bs
+                                                      ? `form-control is-invalid`
+                                                      : `form-control`
+                                              }
+                                              id="dob_bs"
+                                              theme="deepdark"
+                                              required={true}
+                                              value={fields.dob_bs}
+                                              onChange={handleFieldChange}
+                                              dateFormat="YYYY/MM/DD" language="en"
                                     />
                                 </div>
                                 {
@@ -400,10 +401,10 @@ export default function Register(props) {
                             </div>
                             <div className="col-md-3 col-12 mb-2">
                                 <select className={
-                                            validationErrors.blood_group
-                                                ? `custom-select border-width-2 is-invalid`
-                                                : `custom-select border-width-2`
-                                        }
+                                    validationErrors.blood_group
+                                        ? `custom-select border-width-2 is-invalid`
+                                        : `custom-select border-width-2`
+                                }
                                         id="blood_group"
                                         required={true}
                                         value={fields.blood_group}
@@ -418,7 +419,8 @@ export default function Register(props) {
                                 </select>
                                 {
                                     validationErrors.blood_group
-                                        ? <span className="error invalid-feedback">{validationErrors.blood_group[0]}</span>
+                                        ? <span
+                                            className="error invalid-feedback">{validationErrors.blood_group[0]}</span>
                                         : ``
                                 }
                             </div>
@@ -443,7 +445,8 @@ export default function Register(props) {
                                     />
                                     {
                                         validationErrors.mobile
-                                            ? <span className="error invalid-feedback">{validationErrors.mobile[0]}</span>
+                                            ?
+                                            <span className="error invalid-feedback">{validationErrors.mobile[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -464,7 +467,8 @@ export default function Register(props) {
                                     />
                                     {
                                         validationErrors.email
-                                            ? <span className="error invalid-feedback">{validationErrors.email[0]}</span>
+                                            ?
+                                            <span className="error invalid-feedback">{validationErrors.email[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -506,7 +510,8 @@ export default function Register(props) {
                                     />
                                     {
                                         validationErrors.password_confirmation
-                                            ? <span className="error invalid-feedback">{validationErrors.password_confirmation[0]}</span>
+                                            ? <span
+                                                className="error invalid-feedback">{validationErrors.password_confirmation[0]}</span>
                                             : ``
                                     }
                                 </div>
@@ -531,7 +536,9 @@ export default function Register(props) {
                         <div className="row my-2">
                             <div className="col-md-4 col-12"></div>
                             <div className="col-md-4 col-12">
-                                <button type="submit" className="btn btn-primary btn-block" disabled={isDisabled}>Register</button>
+                                <button type="submit" className="btn btn-primary btn-block"
+                                        disabled={isDisabled}>Register
+                                </button>
                             </div>
                             <div className="col-md-4 col-12"></div>
                         </div>

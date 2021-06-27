@@ -24,6 +24,16 @@ const AuthReducer = (state=initialState, action) => {
                 ...state,
                 userAuthResponse: action.res.data
             };
+        case 'OTP_VERIFICATION_SUCCESSFUL':
+            return {
+                ...state,
+                userAuthResponse: action.res.data
+            };
+        case 'OTP_VERIFICATION_FAILED':
+            return {
+                ...state,
+                userAuthResponse: action.res.data
+            };
         case 'CODE_ERROR':
             return {
                 ...state,

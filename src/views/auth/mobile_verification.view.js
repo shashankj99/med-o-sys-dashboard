@@ -1,20 +1,52 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {use_form_fields} from "../../helpers/form.hook";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {ClearAuthState, verify_otp_action} from "../../store/actions/user/auth.action";
 
-let isDisabled = false;
+let isDisabled = false,
+    validationErrors = [];
 
-export default function MobileVerification() {
+export default function MobileVerification(props) {
     const [fields, handleFieldChange] = use_form_fields({
         opt: ''
     });
 
+    const dispatch = useDispatch();
+
+    // dispatch action when page loads... only once
+    useEffect(() => {
+        dispatch(ClearAuthState());
+    }, []);
+
+    // get auth response
+    let userAuthResponse = useSelector(state => state.auth.userAuthResponse);
+
+    // function that calls the verification API
     const verify_otp = (e) => {
         isDisabled = true;
         e.preventDefault();
 
-        console.log(fields);
+        dispatch(verify_otp_action(fields));
     }
+
+    // errors
+    if (userAuthResponse.hasOwnProperty('status') && userAuthResponse.status === 422) {
+        for (const [key, value] of Object.entries(userAuthResponse.errors)) {
+            validationErrors[key] = value;
+        }
+        isDisabled = false;
+    } else if(userAuthResponse.hasOwnProperty('status')) {
+        isDisabled = false;
+        alert(userAuthResponse.message);
+        dispatch(ClearAuthState());
+        if (userAuthResponse.status === 200)
+            props.history.push('/login');
+        else
+            window.location.reload();
+    }
+
+    console.log(userAuthResponse);
 
     return (
         <div className="container">
@@ -28,12 +60,24 @@ export default function MobileVerification() {
                     <form className="lockscreen-credentials" onSubmit={verify_otp} method="post">
                         <div className="input-group">
                             <input type="text"
-                                   className="form-control"
+                                   className={
+                                       validationErrors.otp
+                                           ? `form-control is-invalid`
+                                           : `form-control`
+                                   }
                                    placeholder="Enter OTP"
                                    required={true}
                                    id="otp"
+                                   value={fields.otp}
                                    onChange={handleFieldChange}
                             />
+
+                            {
+                                validationErrors.otp
+                                    ? <span
+                                        className="error invalid-feedback">{validationErrors.otp[0]}</span>
+                                    : ``
+                            }
 
                             <div className="input-group-append">
                                 <button type="submit" className="btn" disabled={isDisabled}>
