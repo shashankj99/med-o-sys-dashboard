@@ -1,4 +1,4 @@
-import {Register, verify_email_token, verify_otp} from "../../../services/auth.service";
+import {Register, verify_email_token, verify_otp, login} from "../../../services/auth.service";
 
 /**
  * Register User Action
@@ -9,7 +9,6 @@ import {Register, verify_email_token, verify_otp} from "../../../services/auth.s
 export const RegisterAction = (credentials) => {
     return (dispatch) => {
         dispatch({ type: 'RESTART_AUTH_RESPONSE' });
-        dispatch({ type: 'LOADING' });
 
         Register(credentials)
             .then(res => {
@@ -57,6 +56,26 @@ export const verify_email_token_action = (token) => {
                     dispatch({ type: 'EMAIL_VERIFICATION_SUCCESSFUL', res });
                 else
                     dispatch({ type: 'EMAIL_VERIFICATION_FAILED', res });
+            })
+            .catch(err => dispatch({ type: 'CODE_ERROR', err }));
+    }
+}
+
+/**
+ * Login Action
+ * @param credentials
+ * @returns {function(...[*]=)}
+ */
+export const login_action = (credentials) => {
+    return (dispatch) => {
+        dispatch({ type: 'RESTART_AUTH_RESPONSE' });
+
+        login(credentials)
+            .then(res => {
+                if (res.status === 200)
+                    dispatch({ type: 'LOGIN_SUCCESSFUL', res });
+                else
+                    dispatch({ type: 'LOGIN_FAILED', res });
             })
             .catch(err => dispatch({ type: 'CODE_ERROR', err }));
     }

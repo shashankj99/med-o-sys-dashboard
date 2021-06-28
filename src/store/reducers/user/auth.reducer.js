@@ -44,6 +44,16 @@ const AuthReducer = (state=initialState, action) => {
                 ...state,
                 userAuthResponse: action.res.data
             };
+        case 'LOGIN_SUCCESSFUL':
+            return {
+                ...state,
+                userAuthResponse: action.res.data
+            };
+        case 'LOGIN_FAILED':
+            return {
+                ...state,
+                userAuthResponse: action.res.data
+            };
         case 'CODE_ERROR':
             return {
                 ...state,

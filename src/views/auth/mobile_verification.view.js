@@ -31,22 +31,22 @@ export default function MobileVerification(props) {
     }
 
     // errors
-    if (userAuthResponse.hasOwnProperty('status') && userAuthResponse.status === 422) {
-        for (const [key, value] of Object.entries(userAuthResponse.errors)) {
-            validationErrors[key] = value;
+    if (userAuthResponse.hasOwnProperty('status')) {
+        if (userAuthResponse.status === 422) {
+            for (const [key, value] of Object.entries(userAuthResponse.errors)) {
+                validationErrors[key] = value;
+            }
+            isDisabled = false;
+        } else {
+            isDisabled = false;
+            alert(userAuthResponse.message);
+            dispatch(ClearAuthState());
+            if (userAuthResponse.status === 200)
+                props.history.push('/login');
+            else
+                window.location.reload();
         }
-        isDisabled = false;
-    } else if(userAuthResponse.hasOwnProperty('status')) {
-        isDisabled = false;
-        alert(userAuthResponse.message);
-        dispatch(ClearAuthState());
-        if (userAuthResponse.status === 200)
-            props.history.push('/login');
-        else
-            window.location.reload();
     }
-
-    console.log(userAuthResponse);
 
     return (
         <div className="container">

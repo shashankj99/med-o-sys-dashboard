@@ -40,3 +40,16 @@ export const verify_email_token = (credentials) => {
         .then(res => { return res })
         .catch(err => { return err.response });
 }
+
+/**
+ * Login API
+ * @param credentials
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const login = (credentials) => {
+    const loginUrl = `${config.oauthUrl}/login`;
+
+    return axios.post(loginUrl, credentials)
+        .then(res => { return res })
+        .catch(err => { return err.response });
+}
