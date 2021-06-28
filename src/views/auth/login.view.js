@@ -8,6 +8,7 @@ let isDisabled = false,
     validationErrors = [];
 
 export default function Login(props) {
+    // form hook
     const [fields, handleFieldChange] = use_form_fields({
         username: '',
         password: ''
@@ -15,12 +16,15 @@ export default function Login(props) {
 
     const dispatch = useDispatch();
 
+    // dispatch action when page loads... only once
     useEffect(() => {
         dispatch(ClearAuthState());
     }, []);
 
+    // auth response from reducer
     let userAuthResponse = useSelector(state => state.auth.userAuthResponse);
 
+    // function to call on form submit
     const login_user = (e) => {
         isDisabled = true;
         e.preventDefault();
@@ -28,6 +32,7 @@ export default function Login(props) {
         dispatch(login_action(fields));
     }
 
+    // responses
     if (userAuthResponse.hasOwnProperty('status')) {
         if (userAuthResponse.status === 422) {
             isDisabled = false;
@@ -38,7 +43,8 @@ export default function Login(props) {
             isDisabled = false;
             dispatch(ClearAuthState());
             if (userAuthResponse.status === 200) {
-                localStorage.setItem('access_token', `Bearer ${userAuthResponse.access_token}`)
+                localStorage.setItem('access_token', `Bearer ${userAuthResponse.access_token}`);
+                localStorage.setItem('roles', JSON.stringify(userAuthResponse.roles));
                 props.history.push('/');
             }
             else {
