@@ -1,6 +1,6 @@
 const config = {
-    oauthUrl: 'http://localhost/med-o-sys-api/auth/public',
-    hospitalUrl: 'http://localhost:35802'
+    oauthUrl: 'https://auth.medosys.lbtechnology.co',
+    hospitalUrl: 'https://hospital.medosys.lbtechnology.co'
 };
 
 export default config;

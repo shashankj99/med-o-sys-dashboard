@@ -16,7 +16,7 @@ export default function EmailVerification(props) {
     useEffect(() => {
         dispatch(ClearAuthState());
         dispatch(verify_email_token_action(token));
-    },[]);
+    },[dispatch, token]);
 
     // response alert
     if (userAuthResponse.hasOwnProperty('status')) {

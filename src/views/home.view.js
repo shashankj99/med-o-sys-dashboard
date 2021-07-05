@@ -1,11 +1,12 @@
 import React from "react";
 
-import Navbar from "../components/navbar/Navbar";
+import Sidebar from "../components/Sidebar";
+import menu_items from "../config/menu_items";
 
 export default function Home() {
     return (
         <>
-            <Navbar />
+            <Sidebar items={menu_items()} />
         </>
     );
 }

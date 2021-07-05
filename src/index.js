@@ -5,6 +5,10 @@ import { Provider } from "react-redux";
 import App from './App';
 import { store } from "./create_store";
 
+import './scss/volt.scss';
+
+import "@fortawesome/fontawesome-free/css/all.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

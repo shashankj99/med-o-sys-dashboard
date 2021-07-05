@@ -1,15 +1,17 @@
 import React, {useEffect} from "react";
 import {use_form_fields} from "../../helpers/form.hook";
-import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {ClearAuthState, verify_otp_action} from "../../store/actions/user/auth.action";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row, Form, Button, Container, InputGroup } from '@themesberg/react-bootstrap';
 
 let isDisabled = false,
     validationErrors = [];
 
 export default function MobileVerification(props) {
     const [fields, handleFieldChange] = use_form_fields({
-        opt: ''
+        otp: ''
     });
 
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ export default function MobileVerification(props) {
     // dispatch action when page loads... only once
     useEffect(() => {
         dispatch(ClearAuthState());
-    }, []);
+    }, [dispatch]);
 
     // get auth response
     let userAuthResponse = useSelector(state => state.auth.userAuthResponse);
@@ -49,63 +51,52 @@ export default function MobileVerification(props) {
     }
 
     return (
-        <div className="container">
-            <div className="lockscreen-wrapper">
-                <div className="lockscreen-logo">
-                    <Link to="/"><b>Med-O</b>-Sys</Link>
-                </div>
+        <main>
+            <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col xs={12} className="d-flex align-items-center justify-content-center">
+                            <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                                <div className="text-center text-md-center mb-4 mt-md-0">
+                                    <h3 className="mb-0">Enter the verification code</h3>
+                                </div>
 
-                <div className="lockscreen-item">
+                                <Form className="mt-4" onSubmit={verify_otp}>
+                                    <Form.Group id="email" className="mb-4">
+                                        <InputGroup>
+                                            <InputGroup.Text>
+                                                <FontAwesomeIcon icon={faShieldAlt} />
+                                            </InputGroup.Text >
+                                            <Form.Control
+                                                required
+                                                type="text" 
+                                                placeholder="xxxxxx"
+                                                id="otp"
+                                                value={fields.otp}
+                                                onChange={handleFieldChange}
+                                                isInvalid={
+                                                    validationErrors.otp
+                                                        ? true
+                                                        : false
+                                                }
+                                            />
+                                            {
+                                                validationErrors.otp
+                                                    ? <Form.Control.Feedback type="invalid">{validationErrors.otp[0]}</Form.Control.Feedback>
+                                                    : ''
+                                            }
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Button variant="primary" type="submit" className="w-100" disabled={isDisabled}>
+                                        Verify
+                                    </Button>
+                                </Form>
 
-                    <form className="lockscreen-credentials" onSubmit={verify_otp} method="post">
-                        <div className="input-group">
-                            <input type="text"
-                                   className={
-                                       validationErrors.otp
-                                           ? `form-control is-invalid`
-                                           : `form-control`
-                                   }
-                                   placeholder="Enter OTP"
-                                   required={true}
-                                   id="otp"
-                                   value={fields.otp}
-                                   onChange={handleFieldChange}
-                            />
-
-                            {
-                                validationErrors.otp
-                                    ? <span
-                                        className="error invalid-feedback">{validationErrors.otp[0]}</span>
-                                    : ``
-                            }
-
-                            <div className="input-group-append">
-                                <button type="submit" className="btn" disabled={isDisabled}>
-                                    <i className="fas fa-arrow-right text-muted"></i>
-                                </button>
                             </div>
-                        </div>
-                    </form>
-
-                </div>
-
-                <div className="help-block text-center">
-                    Enter the OTP that was sent to your device to activate your account
-                </div>
-                <div className="text-center">
-                    <Link to="/login">Or sign in if activated</Link>
-                </div>
-                <div className="lockscreen-footer text-center">
-                    Copyright &copy; &nbsp;
-                    <b>
-                        <Link
-                            to="/"
-                            className="text-black">
-                                Med-O-Sys
-                        </Link>
-                    </b>
-                </div>
-            </div>
-        </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        </main>
     );
 }
