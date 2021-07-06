@@ -1,4 +1,4 @@
-import { get_user_details_by_access_token } from "../../../services/user.service";
+import { get_user_details_by_access_token, update_user_details_by_access_token } from "../../../services/user.service";
 
 export const get_user_details_by_access_token_action = () => {
     return (dispatch) => {
@@ -15,6 +15,26 @@ export const get_user_details_by_access_token_action = () => {
                 })
                 .catch(err => {
                     dispatch({ type: 'USER_DETAILS_FETCH_ERROR', err });
+                })
+        }
+    }
+}
+
+export const update_user_details_by_access_token_action = (data) => {
+    return (dispatch) => {
+        dispatch({ type: 'CLEAR_USER_STATE' });
+
+        const accessToken = localStorage.getItem('access_token');
+
+        if (!accessToken) {
+            localStorage.clear();
+        } else {
+            update_user_details_by_access_token(accessToken, data)
+                .then(res => {
+                    dispatch({ type: 'USER_DETAILS_UPDATE_SUCCESSFUL', res })
+                })
+                .catch(err => {
+                    dispatch({ type: 'USER_DETAILS_UPDATE_ERROR', err });
                 })
         }
     }

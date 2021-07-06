@@ -21,6 +21,18 @@ export default function UserReducer(state = initialState, action) {
                 ...state,
                 userResponse: action.res.data.data
             }
+
+        case 'USER_DETAILS_UPDATE_SUCCESSFUL':
+            return {
+                ...state,
+                userResponse: action.res.data
+            };
+
+        case 'USER_DETAILS_UPDATE_ERROR':
+            return {
+                ...state,
+                userResponse: action.res.data
+            }
     
         default:
             return state;

@@ -9,6 +9,7 @@ import { Col, Row, Form, Button, Card, Container, Image } from '@themesberg/reac
 import Calendar from "@sbmdkl/nepali-datepicker-reactjs";
 import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
 import { useDropzone } from "react-dropzone";
+import { update_user_details_by_access_token_action } from '../store/actions/user/user.action';
 
 const validationErrors = [],
     bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
@@ -236,7 +237,7 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
             if (type === "create") {
                 dispatch(RegisterAction(fields));
             } else if (type === "update") {
-                dispatch(console.log("udpate"));
+                dispatch(update_user_details_by_access_token_action(fields));
             }
         }
     }
@@ -251,13 +252,15 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
         } else {
             isDisabled = false;
             alert(userAuthResponse.message);
-            dispatch(ClearAuthState());
             if (userAuthResponse.status === 200) {
                 if (type === "create")
-                    props.history.push('/mobile/verify');
+                    alert("create");
+                    // props.history.push('/mobile/verify');
                 else if (type === "update")
-                    props.history.back();
+                    alert("update");
+                    // window.location.reload();
             }
+            dispatch(ClearAuthState());
         }
     }
 
@@ -350,7 +353,6 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
                                                         required
                                                         id="province_id"
                                                         value={fields.province_id}
-                                                        onSelected={fetch_districts}
                                                         onChange={fetch_districts}
                                                         isInvalid={
                                                             validationErrors.province_id

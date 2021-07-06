@@ -1,31 +1,40 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row, Card, Image, Button, Container } from '@themesberg/react-bootstrap';
+
+import { Link } from 'react-router-dom';
+
+import NotFoundImage from "../assets/img/illustrations/404.svg";
+
 
 export default function NotFound() {
-    return (
-        <div className="container">
-            <div className="lockscreen-wrapper">
-                <div className="lockscreen-item">
-
-                    <section className="content">
-                        <div className="error-page">
-                            <h2 className="headline text-danger"> 404</h2>
-
-                            <div className="error-content">
-                                <h3><i className="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.
-                                </h3>
-
-                                <p>
-                                    We could not find the page you were looking for.
-                                    Meanwhile, you may <Link to="/">return to dashboard</Link>
-                                </p>
-
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
-            </div>
-        </div>
-    );
-}
+  return (
+    <main>
+      <section className="vh-100 d-flex align-items-center justify-content-center">
+        <Container>
+          <Row>
+            <Col xs={12} className="text-center d-flex align-items-center justify-content-center">
+              <div>
+                <Card.Link as={Link} to='/home'>
+                  <Image src={NotFoundImage} className="img-fluid w-75" />
+                </Card.Link>
+                <h1 className="text-primary mt-5">
+                  Page not <span className="fw-bolder">found</span>
+                </h1>
+                <p className="lead my-4">
+                  Oops! Looks like you followed a bad link. If you think this is a
+                  problem with us, please tell us.
+            </p>
+                <Button as={Link} variant="primary" className="animate-hover" to="/home">
+                  <FontAwesomeIcon icon={faChevronLeft} className="animate-left-3 me-3 ms-2" />
+                  Go back home
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </main>
+  );
+};

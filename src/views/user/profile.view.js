@@ -48,7 +48,7 @@ export default function Profile(props) {
                         fieldsState={fields} 
                         provinceId={userResponse.user.province_id}
                         districtId={userResponse.user.district_id}
-                        type={"update"}
+                        type="update"
                         imgCaption="Click here to change your profile image"
                         props={props}
                     />
