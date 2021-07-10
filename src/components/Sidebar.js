@@ -7,6 +7,8 @@ import { Nav, Badge, Button, Navbar } from '@themesberg/react-bootstrap';
 
 export default function Sidebar({ items })
 {
+    const nodeRef = React.useRef(null);
+
     const [show, setShow] = useState(false);
     const showClass = show ? "show" : "";
 
@@ -45,9 +47,9 @@ export default function Sidebar({ items })
                 </Navbar.Toggle>
             </Navbar>
 
-            <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
+            <CSSTransition timeout={300} in={show} classNames="sidebar-transition" nodeRef={nodeRef}>
                 <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
-                    <div className="sidebar-inner px-4 pt-3">
+                    <div ref={nodeRef} className="sidebar-inner px-4 pt-3">
                         <Nav className="flex-column pt-3 pt-md-0">
                             {
                                 items.map(item => (
