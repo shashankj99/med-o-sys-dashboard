@@ -46,7 +46,7 @@ function calculate_age(dob) {
 function get_wards(totalWards, fields) {
     return totalWards.map(wardNo =>
         <option 
-            key={wardNo} 
+            key={`ward-${wardNo}`} 
             value={wardNo}
             defaultValue={
                 (fields.ward_no === wardNo) 
@@ -98,7 +98,7 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
         if (Array.isArray(provinceResponse))
             return provinceResponse.map(province =>
                 <option 
-                    key={province.id} 
+                    key={province.slug} 
                     value={province.id}
                     defaultValue={
                         (fields.province_id === province.id) 
@@ -125,7 +125,7 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
         if (Array.isArray(districtResponse))
             return districtResponse.map(district =>
                 <option 
-                    key={district.id} 
+                    key={district.slug} 
                     value={district.id}
                     defaultValue={
                         (fields.district_id === district.id) 
@@ -152,7 +152,7 @@ export default function UserForm({ fieldsState, provinceId, districtId, type, im
         if (Array.isArray(cityResponse))
             return cityResponse.map(city =>
                 <option 
-                    key={city.id} 
+                    key={city.slug} 
                     value={city.id}
                     defaultValue={
                         (fields.city_id === city.id) 

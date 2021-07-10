@@ -1,6 +1,4 @@
 import React, {useEffect} from 'react';
-import menu_items from '../../config/menu_items';
-import Sidebar from '../../components/Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import {clear_user_state, get_user_details_by_access_token_action} from '../../store/actions/user/user.action';
 import UserForm from "../../components/UserForm";
@@ -39,8 +37,6 @@ export default function Profile(props) {
 
     return (
         <>
-            <Sidebar items={menu_items()} />
-
             {
                 (userResponse.hasOwnProperty('user'))
                     ? <UserForm 
